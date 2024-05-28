@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do App</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-container {
+  display: flex;
+}
+
+.input-container input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+
+.input-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>To-Do App</h2>
+  <div class="input-container">
+    <input type="text" id="taskInput" placeholder="Add new task...">
+    <button onclick="addTask()">Add</button>
+  </div>
+  <ul id="taskList"></ul>
+  <h3>Completed Tasks</h3>
+  <ul id="completedTaskList"></ul>
+</div>
+
+<script>
+// Function to add a new task
+function addTask() {
+  var taskInput = document.getElementById("taskInput");
+  var taskText = taskInput.value.trim();
+  if (taskText !== "") {
+    var date = new Date();
+    var timestamp = date.toLocaleString();
+    var listItem = document.createElement("li");
+    listItem.innerHTML = `
+      <span>${taskText}</span>
+      <span>${timestamp}</span>
+      <button onclick="completeTask(this)">Complete</button>
+    `;
+    document.getElementById("taskList").appendChild(listItem);
+    taskInput.value = "";
+  }
+}
+
+// Function to mark a task as complete
+function completeTask(button) {
+  var listItem = button.parentElement;
+  listItem.classList.toggle("completed");
+  var completedTaskList = document.getElementById("completedTaskList");
+  completedTaskList.appendChild(listItem);
+  button.textContent = "Delete";
+  button.onclick = function() {
+    listItem.remove();
+  };
+}
+</script>
+
+</body>
+</html>
